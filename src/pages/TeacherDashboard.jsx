@@ -128,7 +128,9 @@ const TeacherDashboard = () => {
         </div>
 
               {/* Dashboard Footer  */}
-            <DashboardFooter/>
+           
+              <DashboardFooter/>
+
       </main>
     </div>
   )
