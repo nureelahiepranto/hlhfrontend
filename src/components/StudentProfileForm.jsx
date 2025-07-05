@@ -91,7 +91,7 @@ function StudentProfileForm() {
               <input
                 type="email"
                 name="email"
-                placeholder="Student Email"
+                placeholder="Employee Email"
                 value={studentData.email}
                 onChange={handleChange}
                 required
