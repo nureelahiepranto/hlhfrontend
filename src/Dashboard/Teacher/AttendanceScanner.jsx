@@ -125,6 +125,9 @@ const AttendanceScanner = () => {
                 onError={handleError}
                 onScan={handleScan}
                 style={{ width: "100%" }}
+                constraints={{
+                    video: { facingMode: { exact: "environment" } } 
+                  }}
               />
 
               {scanResult && (
