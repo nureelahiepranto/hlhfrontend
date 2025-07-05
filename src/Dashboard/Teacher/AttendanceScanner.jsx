@@ -84,7 +84,7 @@ const AttendanceScanner = () => {
   return (
     <div className="p-6">
       <ToastContainer />
-      <h1 className="text-2xl font-bold mb-4 text-rose-500">
+      <h1 className="text-2xl font-bold m-5 pt-5  text-green-500">
         Scan Employee QR Code for Attendance
       </h1>
 

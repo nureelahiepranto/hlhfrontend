@@ -116,7 +116,7 @@ const TeacherDashboard = () => {
           <Topbar toggleSidebar={toggleSidebar} />
 
         {/* Content Area */}
-        <div className=" flex-1 p-6">
+        <div className=" p-6">
           <Routes>
             <Route path="" element={<TeacherDashboardHome />} />
             <Route path="students-list" element={<StudentList />} />
