@@ -91,7 +91,7 @@ const AttendanceScanner = () => {
       <div className="flex items-center justify-center">
         <button
           onClick={openModal}
-          className="bg-green-400 text-white border-2 border-dotted px-4 py-2 rounded shadow-lg text-9xl hover:bg-green-500 transition"
+          className="bg-red-500 text-white border-2 border-dotted px-4 py-2 rounded shadow-lg text-9xl hover:bg-green-500 transition"
         >
           <BsQrCodeScan />
         </button>
