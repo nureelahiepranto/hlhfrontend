@@ -88,13 +88,13 @@ function StudentList() {
                 Name
               </th>
               <th className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
+                Designation
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                 Email
               </th>
               <th className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
                 Phone
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider">
-                Address
               </th>
             </tr>
           </thead>
@@ -116,20 +116,21 @@ function StudentList() {
                     {student?.userId?.name || "N/A"}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
+                    {student?.address || "N/A"}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
                     {student?.userId?.email || "N/A"}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
                     {student?.phone || "N/A"}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    {student?.address || "N/A"}
-                  </td>
+                  
                 </tr>
               ))
             ) : (
               <tr>
                 <td className="px-6 py-4 text-sm text-gray-500 text-center" colSpan="8">
-                  No students found
+                  No Employee found
                 </td>
               </tr>
             )}

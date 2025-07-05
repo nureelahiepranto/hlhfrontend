@@ -117,11 +117,11 @@ function StudentProfileForm() {
           {/* Right Column */}
           <div className="space-y-4">
             <div>
-              <label className="block font-medium text-gray-700">Address</label>
+              <label className="block font-medium text-gray-700">Designation</label>
               <input
                 type="text"
                 name="address"
-                placeholder="Address"
+                placeholder="Designation"
                 value={studentData.address}
                 onChange={handleChange}
                 required
@@ -157,7 +157,7 @@ function StudentProfileForm() {
 
             {/* Profile Image Upload */}
             <div>
-              <label className="block font-medium text-gray-700">Student Image</label>
+              <label className="block font-medium text-gray-700">Employee Image</label>
               <input
                 type="file"
                 name="profileImage"
