@@ -68,6 +68,7 @@ const LoginPage = () => {
             className="w-20 h-20 rounded-full"
           />
           <h1 className="text-2xl font-bold text-blue-900"><span className="text-green-600">Holy Lab</span> Hospital</h1>
+          <p className="text-sm text-gray-500">Sk Tower, 6 Tala Bus Stand, Jamgora, Savar-Ashulia, Dhaka</p>
         </div>
         {error && (
           <p className="text-red-500 text-center bg-red-50 p-2 rounded-lg mb-4">
