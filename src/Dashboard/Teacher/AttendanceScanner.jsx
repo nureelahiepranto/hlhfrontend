@@ -84,11 +84,11 @@ const AttendanceScanner = () => {
   return (
     <div className="p-6">
       <ToastContainer />
-      <h1 className="text-2xl font-bold m-5 pt-5  text-green-500">
+      <h1 className="text-2xl font-bold m-5 pt-5  text-rose-500">
         Scan Employee QR Code for Attendance
       </h1>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center m-5">
         <button
           onClick={openModal}
           className="bg-green-400 text-white border-2 border-dotted px-4 py-2 rounded shadow-lg text-9xl hover:bg-green-500 transition"
