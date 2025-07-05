@@ -34,13 +34,8 @@ const TeacherAttendanceDashboard = () => {
   // Filter students based on search query
   const filteredStudents = students.filter((student) => {
     const name = student.name ? student.name.toLowerCase() : "";
-    const className = student.className ? student.className.toLowerCase() : "";
-    const rollNumber = student.rollNumber ? student.rollNumber.toString() : "";
-
     return (
-      name.includes(searchQuery.toLowerCase()) ||
-      className.includes(searchQuery.toLowerCase()) ||
-      rollNumber.includes(searchQuery)
+      name.includes(searchQuery.toLowerCase())
     );
   });
 
@@ -109,8 +104,6 @@ const TeacherAttendanceDashboard = () => {
             <thead>
               <tr className="bg-gray-100">
                 <th className="border border-gray-300 px-4 py-2">Name</th>
-                <th className="border border-gray-300 px-4 py-2">Class</th>
-                <th className="border border-gray-300 px-4 py-2">Roll Number</th>
                 <th className="border border-gray-300 px-4 py-2">
                   Attendance Status
                 </th>
@@ -127,12 +120,6 @@ const TeacherAttendanceDashboard = () => {
                   <tr key={student._id}>
                     <td className="border border-gray-300 px-4 py-2">
                       {student.name || "N/A"}
-                    </td>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {student.className || "N/A"}
-                    </td>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {student.rollNumber || "N/A"}
                     </td>
                     <td
                       className={`border border-gray-300 px-4 py-2 font-bold ${
