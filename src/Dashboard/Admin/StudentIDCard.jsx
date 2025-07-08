@@ -116,7 +116,7 @@ const StudentIDCard = () => {
                   Phone: <span className="text-gray-700">{studentData.phone}</span>
                 </p>
                 <p className="text-sm font-bold mt-2">
-                  Address: <span className="text-gray-700">{studentData.address}</span>
+                  Designation: <span className="text-gray-700">{studentData.address}</span>
                 </p>
               </div>
 
