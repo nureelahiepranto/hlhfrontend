@@ -97,10 +97,10 @@ function ManageTeachers() {
         setTeachers((prev) =>
           prev.map((teacher) => (teacher._id === editTeacher._id ? response.data.teacher : teacher))
         );
-        toast.success("Teacher updated successfully");
+        toast.success("Attendance Person updated successfully");
       } else {
         setTeachers([...teachers, response.data.teacher]);
-        toast.success("Teacher added successfully");
+        toast.success("Attendance Person added successfully");
       }
   
       setFormData({ name: "", email: "", password: "", phone: "", address: "", image: "" });
@@ -128,7 +128,7 @@ function ManageTeachers() {
         console.log("Delete Response:", response.data);
   
         setTeachers((prev) => prev.filter((teacher) => teacher._id !== id));
-        toast.success("Teacher deleted successfully");
+        toast.success("Attendance Person deleted successfully");
       } catch (err) {
         console.error("Delete Error:", err);
         toast.error(err.response?.data?.message || "Error deleting teacher");

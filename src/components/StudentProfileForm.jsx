@@ -47,7 +47,7 @@ function StudentProfileForm() {
       await axios.post("https://holy-lab-hospital.onrender.com/api/students", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      toast.success("Student profile created successfully");
+      toast.success("Employee profile created successfully");
       setStudentData({
         name: "",
         email: "",
