@@ -28,42 +28,41 @@ const StudentIDCard = () => {
   }, []);
 
   // Handle ID card download
-  const downloadIDCard = async (id) => {
-    const element = document.getElementById(`student-id-card-${id}`);
-    if (!element) {
-      console.error('Element not found!');
-      return;
-    }
-  
-    // Select the button and set visibility instead of display:none
-    const button = element.querySelector('button');
-    if (button) {
-      button.style.visibility = 'hidden'; // Keeps space but hides content
-    }
-  
-    try {
-      const dataUrl = await toPng(element, { quality: 0.95 });
-  
-      // Restore button visibility
-      if (button) {
-        button.style.visibility = 'visible';
+    const downloadIDCard = async (id) => {
+      const element = document.getElementById(`student-id-card-${id}`);
+      if (!element) {
+        console.error('Element not found!');
+        return;
       }
-  
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = `student-id-card-${id}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error('Error downloading ID card:', error);
-  
-      // Restore visibility in case of error
+
+      const button = element.querySelector('button');
       if (button) {
-        button.style.visibility = 'visible';
+        button.style.visibility = 'hidden';
       }
-    }
-  };
+
+      try {
+        const dataUrl = await toPng(element, {
+          pixelRatio: 3, // 📌 Increase for higher resolution image
+          cacheBust: true,
+        });
+
+        if (button) {
+          button.style.visibility = 'visible';
+        }
+
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `student-id-card-${id}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error downloading ID card:', error);
+        if (button) {
+          button.style.visibility = 'visible';
+        }
+      }
+    };
 
   if (loading) return <div className="text-center py-8">Loading...</div>;
 
