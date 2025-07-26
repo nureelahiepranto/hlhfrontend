@@ -51,7 +51,7 @@ function SearchStudent() {
       type="text"
       value={search}
       onChange={handleSearch}
-      placeholder="Search by name, class, roll, or email..."
+      placeholder="Search by name or email..."
       className="mb-4 w-full border px-3 py-2 rounded"
     />
 
