@@ -40,20 +40,23 @@ const TeacherAttendanceDashboard = () => {
   });
 
   // Get attendance details for a student
-  const getAttendanceDetails = (studentId) => {
-    const record = attendanceRecords.find((att) => att.studentId === studentId);
-    if (!record) return { status: "Absent", startTime: null, endTime: null };
+const getAttendanceDetails = (studentId) => {
+  const record = attendanceRecords.find((att) => att.studentId === studentId);
+  if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
-    return {
-      status: "Present",
-      startTime: record.presentStartTime
-        ? new Date(record.presentStartTime).toLocaleTimeString()
-        : "N/A",
-      endTime: record.presentEndTime
-        ? new Date(record.presentEndTime).toLocaleTimeString()
-        : "N/A",
-    };
+  return {
+    status: "Present",
+    startTime: record.presentStartTime
+      ? new Date(record.presentStartTime).toLocaleTimeString()
+      : "N/A",
+    afternoon: record.afternoonAttendance
+      ? new Date(record.afternoonAttendance).toLocaleTimeString()
+      : "N/A",
+    endTime: record.presentEndTime
+      ? new Date(record.presentEndTime).toLocaleTimeString()
+      : "N/A",
   };
+};
 
   // Pagination logic
   const offset = currentPage * PER_PAGE;
@@ -104,23 +107,18 @@ const TeacherAttendanceDashboard = () => {
             <thead>
               <tr className="bg-gray-100">
                 <th className="border border-gray-300 px-4 py-2">Name</th>
-                <th className="border border-gray-300 px-4 py-2">
-                  Attendance Status
-                </th>
+                <th className="border border-gray-300 px-4 py-2">Attendance Status</th>
                 <th className="border border-gray-300 px-4 py-2">Start Time</th>
+                <th className="border border-gray-300 px-4 py-2">Afternoon Time</th>
                 <th className="border border-gray-300 px-4 py-2">End Time</th>
               </tr>
             </thead>
             <tbody>
               {currentPageStudents.map((student) => {
-                const { status, startTime, endTime } = getAttendanceDetails(
-                  student._id
-                );
+                const { status, startTime, afternoon, endTime } = getAttendanceDetails(student._id);
                 return (
                   <tr key={student._id}>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {student.name || "N/A"}
-                    </td>
+                    <td className="border border-gray-300 px-4 py-2">{student.name || "N/A"}</td>
                     <td
                       className={`border border-gray-300 px-4 py-2 font-bold ${
                         status === "Present" ? "text-green-500" : "text-red-500"
@@ -128,12 +126,9 @@ const TeacherAttendanceDashboard = () => {
                     >
                       {status}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {startTime || "N/A"}
-                    </td>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {endTime || "N/A"}
-                    </td>
+                    <td className="border border-gray-300 px-4 py-2">{startTime || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{afternoon || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{endTime || "N/A"}</td>
                   </tr>
                 );
               })}
