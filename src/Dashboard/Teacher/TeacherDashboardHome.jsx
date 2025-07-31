@@ -49,9 +49,9 @@ const TeacherDashboardHome = () => {
 
   // Recent Activities Data (Dummy for now)
   const recentActivities = [
-    { description: "Marked attendance for Class 10A", time: "2 hours ago" },
-    { description: "Uploaded assignment for Class 9B", time: "5 hours ago" },
-    { description: "Reviewed student submissions", time: "1 day ago" },
+    { description: "Marked attendance for Staff", time: "2 hours ago" },
+    { description: "Uploaded assignment for Staff", time: "5 hours ago" },
+    { description: "Reviewed Staff submissions", time: "1 day ago" },
   ];
 
   return (
