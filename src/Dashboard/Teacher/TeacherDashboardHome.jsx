@@ -42,7 +42,7 @@ const TeacherDashboardHome = () => {
   // Quick Stats Data
   const quickStats = [
     { title: "Total Employee", value: stats.students, icon: <FaUsers className="w-8 h-8" />, bgColor: "bg-blue-500" },
-    { title: "Classes Assigned", value: 5, icon: <FaChalkboardTeacher className="w-8 h-8" />, bgColor: "bg-green-500" },
+    { title: "Staff Assigned", value: 5, icon: <FaChalkboardTeacher className="w-8 h-8" />, bgColor: "bg-green-500" },
     { title: "Upcoming Events", value: upcomingEvents.length, icon: <FaCalendarAlt className="w-8 h-8" />, bgColor: "bg-yellow-500" },
     { title: "Notifications", value: 2, icon: <FaBell className="w-8 h-8" />, bgColor: "bg-red-500" },
   ];
