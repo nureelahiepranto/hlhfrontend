@@ -19,7 +19,7 @@ const TeacherAttendanceDashboard = () => {
       try {
         const studentRes = await axios.get("https://holy-lab-hospital.onrender.com/api/studentsD");
         setStudents(studentRes.data.students || []);
-        const attendanceRes = await axios.get("http://localhost:4000/api/today");
+        const attendanceRes = await axios.get("https://holy-lab-hospital.onrender.com/api/today");
         setAttendanceRecords(attendanceRes.data.attendance || []);
       } catch (err) {
         console.error(err);
