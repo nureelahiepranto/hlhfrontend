@@ -46,10 +46,10 @@ const getAttendanceDetails = (studentId) => {
 
   const formatTime = (dateString) =>
     new Date(dateString).toLocaleTimeString("en-BD", {
+      timeZone: "Asia/Dhaka",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
-      timeZone: "Asia/Dhaka",
     });
 
   return {
