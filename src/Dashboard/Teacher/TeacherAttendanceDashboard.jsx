@@ -44,26 +44,30 @@ const getAttendanceDetails = (studentId) => {
   const record = attendanceRecords.find((att) => att.studentId === studentId);
   if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
-const formatTime = (dateString) => {
-  try {
-    return new Date(dateString).toLocaleTimeString("en-US", {
-      timeZone: "Asia/Dhaka",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit", // optional
-      hour12: true,
-    });
-  } catch (err) {
-    console.error("Invalid date/time format:", dateString);
-    return "Invalid Time";
-  }
-};
+  // ✅ Convert UTC to Bangladesh Time (UTC+6) explicitly
+  const formatTime = (dateString) => {
+    if (!dateString) return "N/A";
+    try {
+      const date = new Date(dateString);
+      // Manually add 6 hours for UTC+6 (Bangladesh Time)
+      const bdTime = new Date(date.getTime() + 6 * 60 * 60 * 1000);
+      return bdTime.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+    } catch (err) {
+      console.error("Invalid date:", dateString);
+      return "N/A";
+    }
+  };
 
   return {
     status: "Present",
-    startTime: record.presentStartTime ? formatTime(record.presentStartTime) : "N/A",
-    afternoon: record.afternoonAttendance ? formatTime(record.afternoonAttendance) : "N/A",
-    endTime: record.presentEndTime ? formatTime(record.presentEndTime) : "N/A",
+    startTime: formatTime(record.presentStartTime),
+    afternoon: formatTime(record.afternoonAttendance),
+    endTime: formatTime(record.presentEndTime),
   };
 };
 
