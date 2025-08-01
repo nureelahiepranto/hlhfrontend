@@ -44,12 +44,13 @@ const getAttendanceDetails = (studentId) => {
   const record = attendanceRecords.find((att) => att.studentId === studentId);
   if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
-  const formatTime = (dateString) => {
+const formatTime = (dateString) => {
   try {
     return new Date(dateString).toLocaleTimeString("en-US", {
       timeZone: "Asia/Dhaka",
       hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit", // optional
       hour12: true,
     });
   } catch (err) {
