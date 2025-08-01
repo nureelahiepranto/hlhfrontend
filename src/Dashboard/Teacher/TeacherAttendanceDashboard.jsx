@@ -19,7 +19,7 @@ const TeacherAttendanceDashboard = () => {
       try {
         const studentRes = await axios.get("https://holy-lab-hospital.onrender.com/api/studentsD");
         setStudents(studentRes.data.students || []);
-        const attendanceRes = await axios.get("https://holy-lab-hospital.onrender.com/api/today");
+        const attendanceRes = await axios.get("http://localhost:4000/api/today");
         setAttendanceRecords(attendanceRes.data.attendance || []);
       } catch (err) {
         console.error(err);
@@ -44,17 +44,19 @@ const getAttendanceDetails = (studentId) => {
   const record = attendanceRecords.find((att) => att.studentId === studentId);
   if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
+  const formatTime = (dateString) =>
+    new Date(dateString).toLocaleTimeString("en-BD", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "Asia/Dhaka",
+    });
+
   return {
     status: "Present",
-    startTime: record.presentStartTime
-      ? new Date(record.presentStartTime).toLocaleTimeString()
-      : "N/A",
-    afternoon: record.afternoonAttendance
-      ? new Date(record.afternoonAttendance).toLocaleTimeString()
-      : "N/A",
-    endTime: record.presentEndTime
-      ? new Date(record.presentEndTime).toLocaleTimeString()
-      : "N/A",
+    startTime: record.presentStartTime ? formatTime(record.presentStartTime) : "N/A",
+    afternoon: record.afternoonAttendance ? formatTime(record.afternoonAttendance) : "N/A",
+    endTime: record.presentEndTime ? formatTime(record.presentEndTime) : "N/A",
   };
 };
 
