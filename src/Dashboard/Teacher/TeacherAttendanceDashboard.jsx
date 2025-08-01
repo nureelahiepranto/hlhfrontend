@@ -44,13 +44,19 @@ const getAttendanceDetails = (studentId) => {
   const record = attendanceRecords.find((att) => att.studentId === studentId);
   if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
-  const formatTime = (dateString) =>
-    new Date(dateString).toLocaleTimeString("en-BD", {
+  const formatTime = (dateString) => {
+  try {
+    return new Date(dateString).toLocaleTimeString("en-US", {
       timeZone: "Asia/Dhaka",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
     });
+  } catch (err) {
+    console.error("Invalid date/time format:", dateString);
+    return "Invalid Time";
+  }
+};
 
   return {
     status: "Present",
@@ -75,7 +81,7 @@ const getAttendanceDetails = (studentId) => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Attendance Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-4">Attendance Dashboard14</h1>
 
       {/* Search Bar */}
       <input
