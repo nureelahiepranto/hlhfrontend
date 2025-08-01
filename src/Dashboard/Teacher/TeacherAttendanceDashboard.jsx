@@ -10,16 +10,30 @@ const TeacherAttendanceDashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
 
-  const PER_PAGE = 10; // Number of students per page
+  const PER_PAGE = 10;
 
-  // Fetch students and attendance records
+  const formatTime = (dateString) => {
+    try {
+      return new Date(dateString).toLocaleTimeString("en-US", {
+        timeZone: "Asia/Dhaka",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+    } catch (err) {
+      console.error("Invalid date/time format:", dateString);
+      return "Invalid Time";
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const studentRes = await axios.get("https://holy-lab-hospital.onrender.com/api/studentsD");
-        setStudents(studentRes.data.students || []);
         const attendanceRes = await axios.get("https://holy-lab-hospital.onrender.com/api/today");
+        setStudents(studentRes.data.students || []);
         setAttendanceRecords(attendanceRes.data.attendance || []);
       } catch (err) {
         console.error(err);
@@ -31,64 +45,37 @@ const TeacherAttendanceDashboard = () => {
     fetchData();
   }, []);
 
-  // Filter students based on search query
-  const filteredStudents = students.filter((student) => {
-    const name = student.name ? student.name.toLowerCase() : "";
-    return (
-      name.includes(searchQuery.toLowerCase())
-    );
-  });
+  const filteredStudents = students.filter((student) =>
+    (student.name || "").toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  // Get attendance details for a student
-const getAttendanceDetails = (studentId) => {
-  const record = attendanceRecords.find((att) => att.studentId === studentId);
-  if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
+  const getAttendanceDetails = (studentId) => {
+    const record = attendanceRecords.find((att) => att.studentId === studentId);
+    if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
 
-  // ✅ Convert UTC to Bangladesh Time (UTC+6) explicitly
-  const formatTime = (dateString) => {
-    if (!dateString) return "N/A";
-    try {
-      const date = new Date(dateString);
-      // Manually add 6 hours for UTC+6 (Bangladesh Time)
-      const bdTime = new Date(date.getTime() + 6 * 60 * 60 * 1000);
-      return bdTime.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      });
-    } catch (err) {
-      console.error("Invalid date:", dateString);
-      return "N/A";
-    }
+    return {
+      status: "Present",
+      startTime: record.presentStartTime ? formatTime(record.presentStartTime) : "N/A",
+      afternoon: record.afternoonAttendance ? formatTime(record.afternoonAttendance) : "N/A",
+      endTime: record.presentEndTime ? formatTime(record.presentEndTime) : "N/A",
+    };
   };
 
-  return {
-    status: "Present",
-    startTime: formatTime(record.presentStartTime),
-    afternoon: formatTime(record.afternoonAttendance),
-    endTime: formatTime(record.presentEndTime),
-  };
-};
-
-  // Pagination logic
   const offset = currentPage * PER_PAGE;
   const currentPageStudents = filteredStudents.slice(offset, offset + PER_PAGE);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    setCurrentPage(0); // Reset to the first page on new search
+    setCurrentPage(0);
   };
 
-  // Display loading or error
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Attendance Dashboard14</h1>
+      <h1 className="text-2xl font-bold mb-4">Attendance Dashboard</h1>
 
-      {/* Search Bar */}
       <input
         type="text"
         placeholder="Search Employee..."
@@ -97,21 +84,16 @@ const getAttendanceDetails = (studentId) => {
         className="mb-4 px-4 py-2 border rounded w-full"
       />
 
-      {/* Attendance Summary */}
       <div className="summary mb-4">
-        <p>Total Employee : {filteredStudents.length}</p>
+        <p>Total Employee: {filteredStudents.length}</p>
         <p>
-          Present:{" "}
-          {attendanceRecords.filter((record) => record.presentStartTime).length}
+          Present: {attendanceRecords.filter((record) => record.presentStartTime).length}
         </p>
         <p>
-          Absent:{" "}
-          {filteredStudents.length -
-            attendanceRecords.filter((record) => record.presentStartTime).length}
+          Absent: {filteredStudents.length - attendanceRecords.filter((record) => record.presentStartTime).length}
         </p>
       </div>
 
-      {/* Attendance Table */}
       {filteredStudents.length === 0 ? (
         <div>No Employee available for today.</div>
       ) : (
@@ -132,11 +114,7 @@ const getAttendanceDetails = (studentId) => {
                 return (
                   <tr key={student._id}>
                     <td className="border border-gray-300 px-4 py-2">{student.name || "N/A"}</td>
-                    <td
-                      className={`border border-gray-300 px-4 py-2 font-bold ${
-                        status === "Present" ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
+                    <td className={`border border-gray-300 px-4 py-2 font-bold ${status === "Present" ? "text-green-500" : "text-red-500"}`}>
                       {status}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">{startTime || "N/A"}</td>
@@ -149,28 +127,17 @@ const getAttendanceDetails = (studentId) => {
           </table>
 
           <div className="mt-5">
-            {/* Pagination */}
-          <ReactPaginate 
-            previousLabel={"← Previous"}
-            nextLabel={"Next →"}
-            pageCount={Math.ceil(filteredStudents.length / PER_PAGE)}
-            onPageChange={(e) => setCurrentPage(e.selected)}
-            containerClassName={
-              "flex justify-center gap-3 items-center font-poppins text-xs"
-            }
-            activeClassName={
-              "bg-transparent border-b-4 border-red-500 text-white rounded-lg font-medium py-2"
-            }
-            pageLinkClassName={
-              "bg-transparent text-gray-800 border border-gray-800 rounded-lg font-medium px-3 py-2"
-            }
-            previousLinkClassName={
-              "bg-rose-400 text-white lg:px-4 px-3 text-xs lg:text-base py-2 rounded-lg font-medium"
-            }
-            nextLinkClassName={
-              "bg-rose-400 text-white lg:px-4 px-3 text-xs lg:text-base py-2 rounded-lg font-medium"
-            }
-          />
+            <ReactPaginate
+              previousLabel={"← Previous"}
+              nextLabel={"Next →"}
+              pageCount={Math.ceil(filteredStudents.length / PER_PAGE)}
+              onPageChange={(e) => setCurrentPage(e.selected)}
+              containerClassName="flex justify-center gap-3 items-center font-poppins text-xs"
+              activeClassName="bg-transparent border-b-4 border-red-500 text-white rounded-lg font-medium py-2"
+              pageLinkClassName="bg-transparent text-gray-800 border border-gray-800 rounded-lg font-medium px-3 py-2"
+              previousLinkClassName="bg-rose-400 text-white lg:px-4 px-3 text-xs lg:text-base py-2 rounded-lg font-medium"
+              nextLinkClassName="bg-rose-400 text-white lg:px-4 px-3 text-xs lg:text-base py-2 rounded-lg font-medium"
+            />
           </div>
         </div>
       )}
