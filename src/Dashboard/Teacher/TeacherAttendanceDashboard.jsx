@@ -12,20 +12,6 @@ const TeacherAttendanceDashboard = () => {
 
   const PER_PAGE = 10;
 
-  const formatTime = (dateString) => {
-    try {
-      return new Date(dateString).toLocaleTimeString("en-US", {
-        timeZone: "Asia/Dhaka",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      });
-    } catch (err) {
-      console.error("Invalid date/time format:", dateString);
-      return "Invalid Time";
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,16 +36,26 @@ const TeacherAttendanceDashboard = () => {
   );
 
   const getAttendanceDetails = (studentId) => {
-    const record = attendanceRecords.find((att) => att.studentId === studentId);
-    if (!record) return { status: "Absent", startTime: null, afternoon: null, endTime: null };
+  const record = attendanceRecords.find(
+    (att) => att.studentId === studentId // Only if backend sends `studentId` as string
+  );
 
+  if (!record) {
     return {
-      status: "Present",
-      startTime: record.presentStartTime ? formatTime(record.presentStartTime) : "N/A",
-      afternoon: record.afternoonAttendance ? formatTime(record.afternoonAttendance) : "N/A",
-      endTime: record.presentEndTime ? formatTime(record.presentEndTime) : "N/A",
+      status: "Absent",
+      startTime: null,
+      afternoon: null,
+      endTime: null,
     };
+  }
+
+  return {
+    status: "Present",
+    startTime: record.presentStartTime || "N/A",
+    afternoon: record.afternoonAttendance || "N/A",
+    endTime: record.presentEndTime || "N/A",
   };
+};
 
   const offset = currentPage * PER_PAGE;
   const currentPageStudents = filteredStudents.slice(offset, offset + PER_PAGE);
@@ -117,9 +113,10 @@ const TeacherAttendanceDashboard = () => {
                     <td className={`border border-gray-300 px-4 py-2 font-bold ${status === "Present" ? "text-green-500" : "text-red-500"}`}>
                       {status}
                     </td>
-                    <td className="border border-gray-300 px-4 py-2">{startTime || "N/A"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{afternoon || "N/A"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{endTime || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{startTime && !isNaN(new Date(startTime)) ? new Date(startTime).toISOString().split("T")[1].split(".")[0] : "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{afternoon && !isNaN(new Date(afternoon)) ? new Date(afternoon).toISOString().split("T")[1].split(".")[0] : "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{endTime && !isNaN(new Date(endTime)) ? new Date(endTime).toISOString().split("T")[1].split(".")[0] : "N/A"}</td>
+                   
                   </tr>
                 );
               })}
