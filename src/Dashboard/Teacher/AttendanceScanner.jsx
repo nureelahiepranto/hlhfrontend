@@ -10,6 +10,7 @@ const AttendanceScanner = () => {
   const [attendanceMessage, setAttendanceMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successStatus, setSuccessStatus] = useState(null); // null, true, or false
 
   const openModal = () => {
     setIsOpen(true);
@@ -51,6 +52,7 @@ const AttendanceScanner = () => {
       return;
     }
 
+    setSuccessStatus(null); // reset
     setIsSubmitting(true);
     try {
       const response = await axios.post(
@@ -63,6 +65,7 @@ const AttendanceScanner = () => {
         }
       );
 
+      setSuccessStatus(response.data.success); // ✅ set success state
       setAttendanceMessage(response.data.message);
       toast.success(response.data.message || "Attendance marked!");
 
@@ -75,6 +78,7 @@ const AttendanceScanner = () => {
         error.response?.data?.message ||
         "Failed to mark attendance. Try again.";
       setAttendanceMessage(msg);
+      setSuccessStatus(false); // ❌ failed
       toast.error(msg);
     } finally {
       setIsSubmitting(false);
@@ -154,9 +158,7 @@ const AttendanceScanner = () => {
               {attendanceMessage && (
                 <p
                   className={`mt-4 text-center font-bold ${
-                    attendanceMessage.toLowerCase().includes("success")
-                      ? "text-green-600"
-                      : "text-red-600"
+                    successStatus ? "text-green-600" : "text-red-600"
                   }`}
                 >
                   {attendanceMessage}

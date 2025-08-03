@@ -97,14 +97,14 @@ const TeacherDashboard = () => {
             >
               <MdPersonSearch className="inline-block mr-2 text-blue-300" /> Search Employee
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/teacher/dashboard/today"
               className={({ isActive }) =>
                 `block px-4 py-2 ${isActive ? "bg-gray-700 rounded-l-full" : "hover:bg-gray-700"}`
               }
             >
               <MdQrCodeScanner className="inline-block mr-2 text-red-500" /> Today Attendance
-            </NavLink>
+            </NavLink> */}
           </nav>
         </aside>
 
@@ -122,7 +122,7 @@ const TeacherDashboard = () => {
             <Route path="students-list" element={<StudentList />} />
             <Route path="students-attendance-scan" element={<AttendanceScanner />} />
             <Route path="search-student" element={<SearchStudent />} />
-            <Route path="today" element={<TeacherAttendanceDashboard />} />
+            {/* <Route path="today" element={<TeacherAttendanceDashboard />} /> */}
             <Route path="*" element={<div>Page Not Found (Admin)</div>} />
           </Routes>
         </div>
