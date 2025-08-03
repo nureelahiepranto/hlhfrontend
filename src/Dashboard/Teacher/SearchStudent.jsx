@@ -63,7 +63,7 @@ function SearchStudent() {
           <th className="border p-2">Name</th>
           <th className="border p-2">Email</th>
           <th className="border p-2">Phone</th>
-          <th className="border p-2">Address</th>
+          <th className="border p-2">Designation</th>
         </tr>
       </thead>
       <tbody>
