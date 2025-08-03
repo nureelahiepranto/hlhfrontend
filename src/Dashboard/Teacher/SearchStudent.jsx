@@ -87,7 +87,7 @@ function SearchStudent() {
         ) : (
           <tr>
             <td className="border p-2 text-center" colSpan="8">
-              No students found
+              No Employee found
             </td>
           </tr>
         )}
