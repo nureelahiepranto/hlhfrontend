@@ -201,7 +201,7 @@ const TeacherAttendanceDashboard = () => {
                             {status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-bold">
+                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-bold ${formatUTCWithAMPM(startTime) === "N/A" ? "text-red-500" : "text-black"}`}>
                           {formatUTCWithAMPM(startTime)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-bold">
