@@ -12,8 +12,10 @@ import TeacherAttendanceDashboard from "../Dashboard/Teacher/TeacherAttendanceDa
 import {  MdQrCodeScanner } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import { FaRegAddressCard } from "react-icons/fa6";
+import { FaPeopleRoof } from "react-icons/fa6";
 import ApprovedAttendance from "../Dashboard/Admin/ApprovedAttendance.jsx";
 import StudentProfileForm from "../components/StudentProfileForm.jsx";
+import OfficesManagesmant from "../Dashboard/Admin/OfficesManagesmant.jsx";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -60,6 +62,14 @@ const AdminDashboard = () => {
               }
             >
               <FaUserCog className="inline-block mr-2 text-red-500" /> Dashboard Home
+            </NavLink>
+            <NavLink
+              to="/admin-dashboard/OfficesManagement"
+              className={({ isActive }) =>
+                `block px-4 py-2 ${isActive ? "bg-gray-700 rounded-l-full" : "hover:bg-gray-700"}`
+              }
+            >
+              <FaPeopleRoof className="inline-block mr-2 text-green-400" /> Office Management
             </NavLink>
             <NavLink
               to="/admin-dashboard/studentsList"
@@ -136,6 +146,7 @@ const AdminDashboard = () => {
         <div className="p-6">
           <Routes>
             <Route path="/" element={<DashboardHome />} />
+            <Route path="OfficesManagement" element={<OfficesManagesmant />} />
             <Route path="studentsList" element={<StudentList />} />
             <Route path="teachers" element={<ManageTeachers />} />
             <Route path="ApprovedAttendance" element={<ApprovedAttendance />} />

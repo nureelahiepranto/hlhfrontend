@@ -13,6 +13,8 @@ import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { MdPersonSearch, MdQrCodeScanner } from "react-icons/md";
 import { NavLink, Route, Routes } from 'react-router-dom';
 import TeacherDashboardHome from '../Dashboard/Teacher/TeacherDashboardHome.jsx';
+import OfficesManagement from '../Dashboard/Admin/OfficesManagesmant.jsx';
+import { FaPeopleRoof } from 'react-icons/fa6';
 
 
 
@@ -74,6 +76,14 @@ const TeacherDashboard = () => {
               <RiDashboardHorizontalFill className="inline-block mr-2 text-red-500" /> Dashboard Home
             </NavLink>
             <NavLink
+              to="/teacher/dashboard/OfficesManagement"
+              className={({ isActive }) =>
+                `block px-4 py-2 ${isActive ? "bg-gray-700 rounded-l-full" : "hover:bg-gray-700"}`
+              }
+            >
+             <FaPeopleRoof className="inline-block mr-2 text-green-400" /> Office Management
+            </NavLink>
+            <NavLink
               to="/teacher/dashboard/students-list"
               className={({ isActive }) =>
                 `block px-4 py-2 ${isActive ? "bg-gray-700 rounded-l-full" : "hover:bg-gray-700"}`
@@ -119,6 +129,7 @@ const TeacherDashboard = () => {
         <div className=" p-6">
           <Routes>
             <Route path="" element={<TeacherDashboardHome />} />
+            <Route path="OfficesManagement" element={<OfficesManagement />} />
             <Route path="students-list" element={<StudentList />} />
             <Route path="students-attendance-scan" element={<AttendanceScanner />} />
             <Route path="search-student" element={<SearchStudent />} />
